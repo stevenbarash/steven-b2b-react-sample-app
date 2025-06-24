@@ -66,7 +66,7 @@ const SignIn = () => {
                   className="style-dropdown"
                 >
                   <option value="">Default Style</option>
-                  <option value="ntpluslavoro">NT Plus Lavoro Style</option>
+                  <option value="tylenol">Tylenol</option>
                 </select>
               </div>
               
