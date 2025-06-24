@@ -81,7 +81,7 @@ const SignIn = () => {
                 >
                   <option value="">Browser Default</option>
                   <option value="en">English</option>
-                  <option value="it">Italiano</option>
+                  <option value="es">Español</option>
                 </select>
               </div>
             </div>
