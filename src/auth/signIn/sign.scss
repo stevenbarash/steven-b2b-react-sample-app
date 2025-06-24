@@ -1,0 +1,75 @@
+.main-row {
+  height: 100%;
+  .left-container {
+    overflow-y: auto;
+    height: 100%;
+    .sign-in-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-top: 82px;
+      // overflow-y: auto;
+      
+      // Style selector dropdown
+      .controls-container {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+        
+        .style-selector,
+        .language-selector {
+          text-align: center;
+          
+          label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+            font-size: 14px;
+          }
+          
+          .style-dropdown,
+          .language-dropdown {
+            padding: 8px 12px;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            background-color: white;
+            font-size: 14px;
+            min-width: 180px;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+            
+            &:focus {
+              outline: none;
+              border-color: #1890ff;
+              box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+            }
+            
+            &:hover {
+              border-color: #40a9ff;
+            }
+          }
+        }
+      }
+    }
+  }
+  .right-container {
+    height: 100%;
+  
+    @media only screen and (max-width: 600px) {
+      display: none;
+    }
+    @media only screen and (min-width: 600px) and (max-width: 1000px) {
+      display: none;
+    }
+  
+    .img-banner {
+      border-bottom-left-radius: 200px;
+      height: 100%;
+    }
+  }
+}
+

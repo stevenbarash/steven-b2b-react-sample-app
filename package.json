@@ -1,0 +1,63 @@
+{
+  "name": "b2b-sample-app",
+  "version": "0.1.0",
+  "private": true,
+    "dependencies": {
+    "@ant-design/icons": "5.0.1",
+    "@chakra-ui/react": "^2.8.2",
+    "@descope/node-sdk": "1.7.6",
+    "@descope/react-sdk": "2.14.20",
+    "@emotion/react": "11.11.3",
+    "@emotion/styled": "11.11.0",
+    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/react": "14.0.0",
+    "@testing-library/user-event": "14.4.3",
+    "antd": "5.12.7",
+    "apexcharts": "3.41.0",
+    "framer-motion": "10.17.4",
+    "prismjs": "1.30.0",
+    "react": "18.2.0",
+    "react-apexcharts": "1.4.0",
+    "react-calendar": "4.7.0",
+    "react-dom": "18.2.0",
+    "react-icons": "4.12.0",
+    "react-loading-skeleton": "3.3.1",
+    "react-router-dom": "6.21.3",
+    "react-scripts": "5.0.1",
+    "react-switch": "7.0.0",
+    "react-table": "7.8.0",
+    "sass": "1.69.7",
+    "web-vitals": "3.5.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "resolutions": {
+    "nth-check": ">=2.1.0"
+  },
+  "packageManager": "yarn@1.22.21",
+  "devDependencies": {
+    "cypress": "^14.0.0"
+  }
+}
