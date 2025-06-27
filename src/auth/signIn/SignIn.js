@@ -66,7 +66,6 @@ const SignIn = () => {
                   className="style-dropdown"
                 >
                   <option value="">Default Style</option>
-                  <option value="tylenol">Tylenol</option>
                 </select>
               </div>
               
