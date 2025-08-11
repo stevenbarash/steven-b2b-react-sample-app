@@ -9,7 +9,6 @@ const TransferFunds = () => {
   const { sessionToken } = useSession();
   const { useToken } = theme;
   const { token } = useToken();
-  const [steppedUp, setSteppedUp] = useState(false);
   const [amount, setAmount] = useState("");
   const [showStepUp, setShowStepUp] = useState(false);
   const [transferSuccess, setTransferSuccess] = useState(false);
@@ -17,32 +16,26 @@ const TransferFunds = () => {
 
   // Helper to check if session is stepped up
   const checkStepUp = useCallback(() => {
-    if (sessionToken) {
-      try {
-        const payload = JSON.parse(atob(sessionToken.split('.')[1]));
-        if (payload.su) {
-          setSteppedUp(true);
-        } else {
-          setSteppedUp(false);
-        }
-      } catch (e) {
-        setSteppedUp(false);
-      }
-    } else {
-      setSteppedUp(false);
+    if (!sessionToken) return false;
+    try {
+      const payload = JSON.parse(atob(sessionToken.split('.')[1]));
+      return !!payload.su;
+    } catch (e) {
+      return false;
     }
   }, [sessionToken]);
 
-  // On mount, check for pending transfer in localStorage
+  // On mount, and when session changes, check for pending transfer in localStorage
   useEffect(() => {
-    checkStepUp();
+    const isSteppedUp = checkStepUp();
     const pending = localStorage.getItem(PENDING_TRANSFER_KEY);
     if (pending) {
       try {
         const { amount: pendingAmount, needsStepUp } = JSON.parse(pending);
         setAmount(pendingAmount || "");
-        if (steppedUp && needsStepUp) {
-          // Complete the transfer if user is now stepped up
+        
+        if (isSteppedUp && needsStepUp) {
+          // Use the return value, not the state
           setTransferSuccess(true);
           setShowStepUp(false);
           setError("");
@@ -54,7 +47,7 @@ const TransferFunds = () => {
         localStorage.removeItem(PENDING_TRANSFER_KEY);
       }
     }
-  }, [checkStepUp, steppedUp]);
+  }, [sessionToken, checkStepUp]);
 
   useEffect(() => {
     if (sessionToken) {
@@ -71,22 +64,10 @@ const TransferFunds = () => {
 
   // Handler for Descope step-up success (works for magic link and others)
   const handleStepUpSuccess = () => {
-    setTimeout(() => {
-      checkStepUp();
-      setShowStepUp(false);
-      // After step-up, try to transfer again
-      const pending = localStorage.getItem(PENDING_TRANSFER_KEY);
-      if (pending) {
-        try {
-          const { amount: pendingAmount } = JSON.parse(pending);
-          setAmount(pendingAmount || "");
-          setTransferSuccess(true);
-          localStorage.removeItem(PENDING_TRANSFER_KEY);
-        } catch (e) {
-          localStorage.removeItem(PENDING_TRANSFER_KEY);
-        }
-      }
-    }, 1000);
+    // After a successful step-up, the useSession() hook will receive an updated sessionToken.
+    // This will trigger the `useEffect` above to re-evaluate and complete the pending transfer.
+    // We just need to hide the step-up modal.
+    setShowStepUp(false);
   };
 
   const handleTransfer = (e) => {
@@ -98,7 +79,7 @@ const TransferFunds = () => {
       setError("Please enter a valid amount.");
       return;
     }
-    if (amt > 100 && !steppedUp) {
+    if (amt > 100 && !checkStepUp()) {
       // Save pending transfer to localStorage
       localStorage.setItem(PENDING_TRANSFER_KEY, JSON.stringify({ amount, needsStepUp: true }));
       setShowStepUp(true);
@@ -115,7 +96,7 @@ const TransferFunds = () => {
     localStorage.removeItem(PENDING_TRANSFER_KEY);
   };
 
-  if (showStepUp && !steppedUp) {
+  if (showStepUp) {
     return (
       <div
         className="transfer-funds-container"
@@ -191,4 +172,4 @@ const TransferFunds = () => {
   );
 };
 
-export default TransferFunds; 
+export default TransferFunds;
